@@ -56,8 +56,7 @@ class Raiting(models.Model):
         verbose_name = 'Рейтинг'
         verbose_name_plural = 'Рейтинги'
 
-    def __str__(self):
-        return self.cars
+
 
 class Car_dealership(models.Model):
     name = models.CharField(max_length=255)
