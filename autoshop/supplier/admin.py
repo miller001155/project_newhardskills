@@ -1,17 +1,16 @@
 from django.contrib import admin
 
-from purchaser.models import Balance, Purchaser
+from supplier.models import Supplier, Founder
 
 
-@admin.register(Balance)
-class BalanceAdmin(admin.ModelAdmin):
-    list_display = ('value', 'purchaser')
-    ordering = ('-purchaser',)
-    search_fields = ('value',)
+@admin.register(Supplier)
+class SupplierAdmin(admin.ModelAdmin):
+    list_display = ('name', 'location', 'email', 'auto', 'reviews', 'founder')
+    ordering = ('name',)
+    search_fields = ('auto',)
 
-
-@admin.register(Purchaser)
-class PurchaserAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'second_name', 'sex', 'phone')
-    ordering = ('-first_name',)
-    search_fields = ('first_name',)
+@admin.register(Founder)
+class FounderAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'second_name', 'age', 'company', 'email')
+    ordering = ('company',)
+    search_fields = ('company',)

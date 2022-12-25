@@ -1,12 +1,12 @@
 from django.db import models
 from django_countries.fields import CountryField
 
-from core.abstract_models import BaseModel
+from core.abstract_models import AbstractDefaultModel
 from core.enums.car_dealership_enums import Currency, StatusOfCar
 from core.validators import check_raiting
 
 
-class Car(models.Model):
+class Car(AbstractDefaultModel):
     title = models.CharField(max_length=255, verbose_name='Название')
     content = models.TextField(blank=True, verbose_name='Описание')
     year = models.SmallIntegerField(verbose_name='Год', default=1995)
@@ -14,16 +14,19 @@ class Car(models.Model):
     currency = models.CharField(
         max_length=3,
         choices=Currency.choices,
-        default=Currency.USD
+        default=Currency.USD,
+        verbose_name='валюта'
     )
     cat = models.ForeignKey(
         'Category',
         on_delete=models.PROTECT,
+        verbose_name='категория'
     )
     status = models.CharField(
         max_length=255,
         choices=StatusOfCar.choices,
-        default=StatusOfCar.Available
+        default=StatusOfCar.Available,
+        verbose_name='статус'
     )
     class Meta:
         ordering = ('title',)
@@ -33,8 +36,8 @@ class Car(models.Model):
     def __str__(self):
         return self.title
 
-class Category(models.Model):
-    name = models.CharField(max_length=255)
+class Category(AbstractDefaultModel):
+    name = models.CharField(max_length=255, verbose_name='категория')
 
     class Meta:
         ordering = ('name',)
@@ -43,8 +46,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-class Raiting(models.Model):
-    value = models.IntegerField(validators=[check_raiting], default=1)
+class Raiting(AbstractDefaultModel):
+    value = models.IntegerField(validators=[check_raiting], default=1, verbose_name='рейтинг')
     cars = models.ForeignKey(
         Car,
         on_delete=models.PROTECT,
@@ -58,11 +61,11 @@ class Raiting(models.Model):
 
 
 
-class Car_dealership(models.Model):
-    name = models.CharField(max_length=255)
-    characteristic = models.TextField(blank=True)
-    location = CountryField()
-    contact = models.EmailField()
+class Car_dealership(AbstractDefaultModel):
+    name = models.CharField(max_length=255, verbose_name='имя')
+    characteristic = models.TextField(blank=True, verbose_name='характеристика')
+    location = CountryField(verbose_name='локация')
+    contact = models.EmailField(verbose_name='почта')
     cars = models.ForeignKey(
         Car,
         on_delete=models.CASCADE
