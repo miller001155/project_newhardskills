@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'core',
+
     'django_countries.fields',
     'car_dealership.apps.CarDealershipConfig',
     'purchaser.apps.PurchaserConfig',
