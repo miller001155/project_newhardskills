@@ -1,14 +1,13 @@
 from django_filters import rest_framework as filters
 
 import supplier
-from supplier.models import Founder
+from supplier.models import Founder, Supplier
 
 
 class SupplierFilter(filters.FilterSet):
     name = filters.CharFilter()
-    location = filters.ChoiceFilter()
     class Meta:
-        model = supplier
+        model = Supplier
         fields = ['name', 'location']
 
 

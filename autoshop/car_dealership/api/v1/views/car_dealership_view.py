@@ -1,6 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import  mixins
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import GenericViewSet
 
 from car_dealership.api.v1.serializers.car_dealership_serializer import Car_dealershipSerializer
@@ -21,6 +22,7 @@ class Car_dealershipViewSet(mixins.CreateModelMixin,
     queryset = Car_dealership.objects.all()
     serializer_class = Car_dealershipSerializer
     pagination_class = APIListPagination
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     filter_backends = [DjangoFilterBackend]
     filterset_class = Car_dealershipFilter
     search_fields = ['name']
